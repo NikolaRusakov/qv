@@ -2,8 +2,22 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
+import { AuthConfig } from 'angular-oauth2-oidc';
+
+export const authConfig: AuthConfig = {
+  issuer: 'https://{yourOktaDomain}/oauth2/default',
+  redirectUri: window.location.origin,
+  clientId: '{yourClientId}',
+};
+
 export const environment = {
-  production: false
+  production: false,
+  firebase: {},
+  oauth2: {
+    issuer: 'http://localhost:3000/login',
+    redirectLink: window.location.origin + '/index.html',
+    // clientId: 'nokpaqiuttnxbr39porcqirjhh',
+  },
 };
 
 /*
