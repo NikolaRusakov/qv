@@ -1,0 +1,13 @@
+.medium-tooltip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),
+    border-radius 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),
+    background-color 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  background-color: aliceblue;
+}

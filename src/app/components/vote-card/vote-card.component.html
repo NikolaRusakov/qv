@@ -1,0 +1,83 @@
+<mat-card>
+  <mat-card-header
+    fxLayout="row-reverse"
+    fxLayoutAlign="space-between flex-start"
+  >
+    <div fxLayoutAlign="flex-end" mat-card-avatar>
+      <button mat-icon-button>
+        <mat-icon aria-label="Action button" class="mat-18">star_rate</mat-icon>
+      </button>
+
+      <button
+        mat-icon-button
+        color="primary"
+        #toggle
+        [value]="false"
+        (click)="toggle.value = !toggle.value"
+      >
+        <mat-icon class="mat-18">
+          {{ toggle.value ? 'turned_in' : 'turned_in_not' }}
+        </mat-icon>
+      </button>
+
+      <button mat-mini-fab>
+        <mat-icon aria-label="Action button" class="mat-18">
+          add_circle
+        </mat-icon>
+      </button>
+    </div>
+
+    <mat-card-title>
+      <h1>{{ vote.title }}</h1>
+    </mat-card-title>
+
+    <mat-card-subtitle>
+      <h3>
+        Question By {{ vote.createdBy }} –
+        {{ vote.createdAt.seconds * 1000 | date: 'mediumDate' }}
+      </h3>
+    </mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    <div fxLayout="column">
+      <h3>
+        <em>{{ vote.question }}</em>
+      </h3>
+      <mat-divider [inset]="true"></mat-divider>
+      <div *ngFor="let answer of vote.answers">
+        <h6>{{ calcMediumVal(answer.value, answer.amount) }}/10</h6>
+        <h4>{{ answer.answer }}</h4>
+        <mat-slider
+          [min]="min"
+          [max]="max"
+          [step]="step"
+          value="1.5"
+          thumbLabel
+          tickInterval="1000"
+          #slider
+        ></mat-slider>
+        <div
+          class="medium-tooltip"
+          [style.transform]="
+            'translateX(' +
+            calcMediumPos(calcMediumVal(answer.value, answer.amount), max) +
+            '%)'
+          "
+        ></div>
+      </div>
+    </div>
+  </mat-card-content>
+  <mat-card-actions fxLayout="row" [align]="'end'">
+    <button
+      mat-icon-button
+      #expandBtn
+      [value]="false"
+      (click)="expandBtn.value = !expandBtn.value"
+    >
+      <mat-icon class="mat-36">
+        {{ expandBtn.value ? 'expand_less' : 'expand_more' }}
+      </mat-icon>
+    </button>
+  </mat-card-actions>
+</mat-card>

@@ -1,0 +1,20 @@
+<qv-main-nav>
+  <button mat-flat-button (click)="login()">Login</button>
+  <
+  <div fxLayout="column" fxLayoutGap="20px">
+    <qv-add-vote></qv-add-vote>
+    <!--<mat-grid-list cols="4" rowHeight="">-->
+    <!--<mat-grid-tile-->
+    <!--*ngFor="let tile of tiles"-->
+    <!--[colspan]="tile.cols"-->
+    <!--[rowspan]="tile.rows"-->
+    <!--[style.background]="tile.color">-->
+    <!--{{tile.text}}-->
+    <!--</mat-grid-tile>-->
+    <!--</mat-grid-list>-->
+    <div *ngFor="let vote of (votes | async)">
+      <qv-vote-card [vote]="vote"></qv-vote-card>
+    </div>
+  </div>
+  {{ votes | async | json }}
+</qv-main-nav>

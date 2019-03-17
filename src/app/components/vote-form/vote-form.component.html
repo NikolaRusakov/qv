@@ -1,0 +1,48 @@
+<form
+  [formGroup]="createVote"
+  fxLayout="column"
+  fxLayoutAlign="center center"
+  (submit)="createVote.valid && onSubmit.emit(createVote.value)"
+>
+  <mat-form-field>
+    <input matInput placeholder="Title" formControlName="title" />
+  </mat-form-field>
+
+  <mat-form-field>
+    <textarea
+      matInput
+      placeholder="Question"
+      formControlName="question"
+    ></textarea>
+  </mat-form-field>
+
+  <form formArrayName="answers" fxLayout="column" fxLayoutAlign="center center">
+    <mat-form-field *ngFor="let answer of answersIter; let i = index">
+      <input
+        [formControl]="answer.get('answer')"
+        [placeholder]="'Add ' + (i + 1) + '. Answer'"
+        type="text"
+        matInput
+      />
+      <button
+        *ngIf="i !== 0 || answersIter.length > 1"
+        matSuffix
+        mat-icon-button
+        aria-label="Remove answer"
+        (click)="removeAnswer(i)"
+      >
+        <mat-icon>delete_outline</mat-icon>
+      </button>
+    </mat-form-field>
+    <button
+      mat-mini-fab
+      color="accent"
+      fxLayoutAlign="center center"
+      (click)="addAnswer($event)"
+    >
+      <mat-icon aria-label="Add answer">add_circle</mat-icon>
+    </button>
+  </form>
+
+  <button mat-button color="primary" type="submit">SUBMIT</button>
+</form>
