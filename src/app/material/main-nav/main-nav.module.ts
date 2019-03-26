@@ -4,10 +4,15 @@ import {
   MatButtonModule,
   MatIconModule,
   MatListModule,
+  MatMenuModule,
   MatSidenavModule,
   MatToolbarModule,
+  MatSnackBarModule,
 } from '@angular/material';
 import { MainNavComponent } from './main-nav.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { LoginDialogModule } from '@app/components/login-dialog/login-dialog.module';
+import { VarDirectiveModule } from '@app/pipes/var/var-directive.module';
 
 @NgModule({
   declarations: [MainNavComponent],
@@ -18,6 +23,11 @@ import { MainNavComponent } from './main-nav.component';
     MatListModule,
     MatIconModule,
     MatButtonModule,
+    MatMenuModule,
+    LoginDialogModule,
+    MatSnackBarModule,
+    FlexLayoutModule,
+    VarDirectiveModule
   ],
   exports: [MainNavComponent],
 })

@@ -4,19 +4,61 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { MatBottomSheet } from '@angular/material';
 import * as actionAuth from '@app/features/auth/auth.actions';
 import { Vote } from '@app/features/vote/vote-models';
-import { selectVoteEntities, State } from '@app/reducers';
+import { $selectVoteEntities, State } from '@app/reducers';
 import { InitService } from '@app/services/init.service';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
+import {
+  animate,
+  query,
+  stagger,
+  style,
+  transition,
+  trigger,
+} from '@angular/animations';
 
 @Component({
   selector: 'qv-dashboard',
   templateUrl: './dashboard.component.html',
+  animations: [
+    trigger('itemState', [
+      transition('* <=> *', [
+
+        query(':enter', [
+          style({ opacity: 0 }),
+          stagger(250, [
+            animate(
+              '0.5s',
+              style({ transform: 'translateX(-100%)', opacity: .25 }),
+            ),
+          ]),
+        ]),
+        query(':leave', [
+          stagger(250, [
+            animate(
+              '0.5s',
+              style({ transform: 'translateX(100%)', opacity: 0 }),
+            ),
+          ]),
+        ], { optional: true }),
+      ]),
+      /*transition('void => *', [
+        stagger(250, [
+          style({ transform: 'translateX(-100%)' }),
+          animate('500ms ease-out'),
+        ]),
+      ]),
+      transition('* => void', [
+        animate('500ms ease-in', style({ transform: 'translateX(100%)' })),
+      ]),
+    ]),*/
+    ]),
+  ],
 })
 export class DashboardComponent {
-  votes: Observable<Vote[]> = this.store.pipe(select(selectVoteEntities)).pipe(
+  votes: Observable<Vote[]> = this.store.pipe(select($selectVoteEntities)).pipe(
     map(item => {
       console.log(Object.values(item));
       return Object.values(item);
@@ -28,52 +70,9 @@ export class DashboardComponent {
     public afAuth: AngularFireAuth,
     private bottomSheet: MatBottomSheet,
     private readonly init: InitService,
-    @Inject(DOCUMENT) private readonly document: Document,
   ) {
     this.init.fetchVotes();
   }
 
-  login() {
-    const h = 640,
-      w = 480;
-    const dualScreenLeft = window.screenLeft;
-    const dualScreenTop = window.screenTop;
 
-    const width = window.innerWidth
-      ? window.innerWidth
-      : document.documentElement.clientWidth
-      ? document.documentElement.clientWidth
-      : screen.width;
-
-    const height = window.innerHeight
-      ? window.innerHeight
-      : document.documentElement.clientHeight
-      ? document.documentElement.clientHeight
-      : screen.height;
-
-    const left = width / 2 - w / 2 + dualScreenLeft;
-    const top = height / 2 - h / 2 + dualScreenTop;
-
-    const oauthDialog = window.open(
-      environment.oauth2.issuer,
-      'Mattermost Authentication',
-      `scrollbars=yes, width=${w}, height=${h}, top=${top}, left=${left}`
-    );
-
-    const onMessage = e => {
-      if (e.origin === location.origin) {
-        const {
-          data: { token },
-        } = e;
-        if (token !== undefined) {
-          console.log(token);
-          this.store.dispatch(new actionAuth.SaveAuthToken(e.data.token));
-        }
-      }
-    };
-
-    oauthDialog.addEventListener('message', onMessage);
-  }
-
-  logout() {}
 }

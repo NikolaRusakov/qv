@@ -1,0 +1,30 @@
+<div mat-dialog-content>
+  <form [formGroup]="userForm" (submit)="sendCreds()">
+    <p>Login</p>
+    <mat-form-field>
+      <input
+        type="text"
+        matInput
+        placeholder="User Name"
+        formControlName="username"
+        [value]="'rusakov'"
+      />
+    </mat-form-field>
+
+    <mat-form-field>
+      <input
+        type="password"
+        matInput
+        placeholder="Password"
+        formControlName="password"
+      />
+    </mat-form-field>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="sendCreds()">Send</button>
+  <button mat-button (click)="onNoClick()">No Thanks</button>
+  <button mat-button [mat-dialog-close]="user" cdkFocusInitial>
+    Close
+  </button>
+</div>

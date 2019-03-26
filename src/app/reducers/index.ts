@@ -24,14 +24,7 @@ export const metaReducers: MetaReducer<State>[] = !environment.production
 
 export const selectVoteState = createFeatureSelector<fromVote.State>('votes');
 
-export const selectFeature = (state: State) => state.auth;
-
-export const selectAuthToken = createSelector(
-  selectFeature,
-  ({ auth }) => auth,
-);
-
-export const selectVoteEntities = createSelector(
+export const $selectVoteEntities = createSelector(
   selectVoteState,
   fromVote.selectEntities,
 );

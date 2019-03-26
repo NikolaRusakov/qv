@@ -15,7 +15,7 @@
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
-    <mat-toolbar color="primary">
+    <mat-toolbar color="primary" fxlayout fxLayoutAlign="space-between center">
       <button
         type="button"
         aria-label="Toggle sidenav"
@@ -25,8 +25,33 @@
       >
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
-      <h1>qvote</h1>
+
+      <h1 fxFlexOffset.gt-sm="50">qvote</h1>
+
+      <ng-container
+        *ngIf="(userInfo$ | async).login; then actionMenu; else loginMenu"
+      ></ng-container>
+      <ng-template #loginMenu>
+        <button mat-flat-button (click)="openLoginDialog()">Login</button>
+      </ng-template>
+
+      <ng-template #actionMenu>
+        <button mat-icon-button [matMenuTriggerFor]="menu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+      </ng-template>
     </mat-toolbar>
+    <mat-menu #menu="matMenu">
+      <button
+        *ngIf="(userInfo$ | async) as user"
+        mat-menu-item
+        (click)="logoutUser(user.displayName)"
+      >
+        <mat-icon>exit_to_app</mat-icon>
+        <span>Sign out</span>
+      </button>
+    </mat-menu>
+
     <ng-content></ng-content>
   </mat-sidenav-content>
 </mat-sidenav-container>

@@ -12,7 +12,17 @@ export const authConfig: AuthConfig = {
 
 export const environment = {
   production: false,
-  firebase: {},
+  firebase: {
+    apiKey: '',
+    authDomain: '',
+    databaseURL: '',
+    projectId: '',
+    storageBucket: '',
+    messagingSenderId: '',
+  },
+  functions: {
+    auth: 'http://localhost:3000',
+  },
   oauth2: {
     issuer: 'http://localhost:3000/login',
     redirectLink: window.location.origin + '/index.html',

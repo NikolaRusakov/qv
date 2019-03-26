@@ -26,7 +26,7 @@ export const initialState: State = adapter.getInitialState();
 export type State = EntityState<Vote>;
 
 export function reducer(state = initialState, action: VoteActions): State {
-  console.log(action);
+  // console.log(action);
   switch (action.type) {
     case VoteActionTypes.LoadVotes: {
       return state;

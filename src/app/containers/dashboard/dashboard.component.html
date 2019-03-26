@@ -1,6 +1,4 @@
 <qv-main-nav>
-  <button mat-flat-button (click)="login()">Login</button>
-  <
   <div fxLayout="column" fxLayoutGap="20px">
     <qv-add-vote></qv-add-vote>
     <!--<mat-grid-list cols="4" rowHeight="">-->
@@ -12,7 +10,7 @@
     <!--{{tile.text}}-->
     <!--</mat-grid-tile>-->
     <!--</mat-grid-list>-->
-    <div *ngFor="let vote of (votes | async)">
+    <div [@itemState]="(votes | async).length" *ngFor="let vote of (votes | async)" >
       <qv-vote-card [vote]="vote"></qv-vote-card>
     </div>
   </div>
