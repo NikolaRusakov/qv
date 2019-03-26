@@ -33,6 +33,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AppEffects } from './app.effects';
 import { metaReducers, reducers } from './reducers';
+import { AuthEffects } from '@app/features/auth/auth.effects';
+import { VoteEffects } from '@app/features/vote/vote.effects';
 
 
 @NgModule({
@@ -45,7 +47,7 @@ import { metaReducers, reducers } from './reducers';
     }),
     AngularFireAuthModule,
     AngularFireStorageModule,
-    StoreModule.forRoot(reducers, { metaReducers }),
+    StoreModule.forRoot(reducers, {metaReducers}),
     StoreRouterConnectingModule.forRoot(),
     !environment.production && StoreDevtoolsModule.instrument(),
     AppRoutingModule,
@@ -60,7 +62,7 @@ import { metaReducers, reducers } from './reducers';
     MatCardModule,
     MatMenuModule,
     MatBottomSheetModule,
-    EffectsModule.forRoot([AppEffects]),
+    EffectsModule.forRoot([AppEffects, VoteEffects, AuthEffects]),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: environment.production,
@@ -74,13 +76,14 @@ import { metaReducers, reducers } from './reducers';
     }),*/
   ],
   providers: [
-    { provide: FirestoreSettingsToken, useValue: {} },
+    {provide: FirestoreSettingsToken, useValue: {}},
     InitService,
     {
       provide: MAT_BOTTOM_SHEET_DEFAULT_OPTIONS,
-      useValue: { hasBackdrop: false },
+      useValue: {hasBackdrop: false},
     },
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule {
+}
