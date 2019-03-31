@@ -1,5 +1,4 @@
 import { AuthActions, AuthActionTypes } from './auth.actions';
-import { UserInfo } from 'firebase';
 
 interface QvoteUserInfo {
   displayName: string | null;
@@ -8,7 +7,7 @@ interface QvoteUserInfo {
   photoURL: string | null;
   providerId: string;
   uid?: string;
-  login: boolean,
+  login: boolean;
 }
 
 export interface State {
@@ -25,7 +24,7 @@ export const initialState: State = {
     email: null,
     displayName: null,
     login: false,
-  }
+  },
 };
 
 export function reducer(state = initialState, action: AuthActions): State {
@@ -34,7 +33,7 @@ export function reducer(state = initialState, action: AuthActions): State {
   switch (action.type) {
     case AuthActionTypes.LoadAuth: {
       return {
-        ...state
+        ...state,
       };
     }
     case AuthActionTypes.SaveAuthToken: {
@@ -49,7 +48,7 @@ export function reducer(state = initialState, action: AuthActions): State {
         email,
         photoURL,
         providerId,
-        phoneNumber
+        phoneNumber,
       } = action.creds;
       return {
         ...state,
@@ -59,8 +58,21 @@ export function reducer(state = initialState, action: AuthActions): State {
           phoneNumber,
           photoURL,
           providerId,
-          login: true
-        }
+          login: true,
+        },
+      };
+    }
+    case AuthActionTypes.LogoutFromAppSuccess: {
+      return {
+        ...state,
+        credentials: {
+          phoneNumber: null,
+          providerId: '',
+          photoURL: null,
+          email: null,
+          displayName: null,
+          login: false,
+        },
       };
     }
 
