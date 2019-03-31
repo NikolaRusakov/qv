@@ -1,15 +1,13 @@
-import { DOCUMENT } from '@angular/common';
-import { Component, Inject, OnInit } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/auth';
-import { MatBottomSheet } from '@angular/material';
-import * as actionAuth from '@app/features/auth/auth.actions';
+import { Component } from '@angular/core';
+import { MatBottomSheet, MatDialog } from '@angular/material';
 import { Vote } from '@app/features/vote/vote-models';
 import { $selectVoteEntities, State } from '@app/reducers';
 import { InitService } from '@app/services/init.service';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { environment } from '../../../environments/environment';
+import { Client4 } from 'mattermost-redux/client';
+
 import {
   animate,
   query,
@@ -25,24 +23,27 @@ import {
   animations: [
     trigger('itemState', [
       transition('* <=> *', [
-
         query(':enter', [
           style({ opacity: 0 }),
           stagger(250, [
             animate(
               '0.5s',
-              style({ transform: 'translateX(-100%)', opacity: .25 }),
+              style({ transform: 'translateX(-100%)', opacity: 0.25 }),
             ),
           ]),
         ]),
-        query(':leave', [
-          stagger(250, [
-            animate(
-              '0.5s',
-              style({ transform: 'translateX(100%)', opacity: 0 }),
-            ),
-          ]),
-        ], { optional: true }),
+        query(
+          ':leave',
+          [
+            stagger(250, [
+              animate(
+                '0.5s',
+                style({ transform: 'translateX(100%)', opacity: 0 }),
+              ),
+            ]),
+          ],
+          { optional: true },
+        ),
       ]),
       /*transition('void => *', [
         stagger(250, [
@@ -51,7 +52,7 @@ import {
         ]),
       ]),
       transition('* => void', [
-        animate('500ms ease-in', style({ transform: 'translateX(100%)' })),
+        animate('500m s ease-in', style({ transform: 'translateX(100%)' })),
       ]),
     ]),*/
     ]),
@@ -67,12 +68,10 @@ export class DashboardComponent {
 
   constructor(
     private store: Store<State>,
-    public afAuth: AngularFireAuth,
     private bottomSheet: MatBottomSheet,
     private readonly init: InitService,
   ) {
     this.init.fetchVotes();
   }
-
 
 }

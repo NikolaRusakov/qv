@@ -35,6 +35,8 @@ import { AppEffects } from './app.effects';
 import { metaReducers, reducers } from './reducers';
 import { AuthEffects } from '@app/features/auth/auth.effects';
 import { VoteEffects } from '@app/features/vote/vote.effects';
+import { LoginDialogModule } from '@app/components/login-dialog/login-dialog.module';
+import { LoginDialogComponent } from '@app/components/login-dialog/login-dialog.component';
 
 
 @NgModule({
@@ -62,6 +64,7 @@ import { VoteEffects } from '@app/features/vote/vote.effects';
     MatCardModule,
     MatMenuModule,
     MatBottomSheetModule,
+    LoginDialogModule,
     EffectsModule.forRoot([AppEffects, VoteEffects, AuthEffects]),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
@@ -83,6 +86,7 @@ import { VoteEffects } from '@app/features/vote/vote.effects';
       useValue: {hasBackdrop: false},
     },
   ],
+  entryComponents:[LoginDialogComponent],
   bootstrap: [AppComponent],
 })
 export class AppModule {
