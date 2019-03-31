@@ -13,6 +13,9 @@ import { UserCustomToken } from '@app/models/user-login.model';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'environments/environment';
 import { from } from 'rxjs';
+import { ShowDialog } from '@app/features/dialogs/dialogs.actions';
+import { Store } from '@ngrx/store';
+import { State } from '@app/reducers';
 
 @Injectable()
 export class AuthEffects {
@@ -37,6 +40,19 @@ export class AuthEffects {
   @Effect()
   loginToMattermost = this.actions$.pipe(
     ofType(AuthActionTypes.LoginToMattermost),
+    tap(_ =>
+      this.store.dispatch(
+        new ShowDialog({
+          duration: 2000,
+          data: {
+            message: 'Logging to Mattermost',
+            // action: 'trigger',
+            // caller: () => console.log('action triggerd'),
+          },
+          verticalPosition: 'top',
+        }),
+      ),
+    ),
     switchMap(({ creds: { username, password } }) => {
       return from(loginAndGetUser(username, password));
     }),
@@ -65,6 +81,19 @@ export class AuthEffects {
       ),
     ),
     switchMap(creds => creds),
+    tap(({ user: { displayName } }) =>
+      this.store.dispatch(
+        new ShowDialog({
+          duration: 2000,
+          data: {
+            message: `You're welcome ${displayName ? ',' + displayName : ''}`,
+            // action: 'trigger',
+            // caller: () => console.log('action triggerd'),
+          },
+          verticalPosition: 'top',
+        }),
+      ),
+    ),
     tap(item => console.log(item)),
     map(
       ({
@@ -93,5 +122,6 @@ export class AuthEffects {
     private actions$: Actions,
     private afAuth: AngularFireAuth,
     private httpClient: HttpClient,
+    private store: Store<State>,
   ) {}
 }

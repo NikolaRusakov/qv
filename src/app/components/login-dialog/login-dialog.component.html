@@ -1,3 +1,63 @@
+<mat-vertical-stepper [linear]="false" #stepper>
+  <mat-step>
+
+      <ng-template matStepLabel>Login to Mattermost</ng-template>
+        <button mat-button matStepperNext>Next</button>
+    <div mat-dialog-content>
+      <form [formGroup]="userForm" (submit)="sendCreds()">
+        <p>Login</p>
+        <mat-form-field>
+          <input
+            type="text"
+            matInput
+            placeholder="User Name"
+            formControlName="username"
+            [value]="'rusakov'"
+          />
+        </mat-form-field>
+
+        <mat-form-field>
+          <input
+            type="password"
+            matInput
+            placeholder="Password"
+            formControlName="password"
+          />
+        </mat-form-field>
+      </form>
+    </div>
+    <div mat-dialog-actions>
+      <button mat-button (click)="sendCreds()">Send</button>
+      <button mat-button (click)="onNoClick()">No Thanks</button>
+      <button mat-button [mat-dialog-close]="user" cdkFocusInitial>
+        Close
+      </button>
+    </div>
+
+  </mat-step>
+  <mat-step>
+    <form>
+      <ng-template matStepLabel>Fill out your address</ng-template>
+      <mat-form-field>
+        <input matInput placeholder="Address" />
+      </mat-form-field>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Done</ng-template>
+    You are now done.
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button>Reset</button>
+    </div>
+  </mat-step>
+</mat-vertical-stepper>
+
+<!--
 <div mat-dialog-content>
   <form [formGroup]="userForm" (submit)="sendCreds()">
     <p>Login</p>
@@ -28,3 +88,4 @@
     Close
   </button>
 </div>
+-->

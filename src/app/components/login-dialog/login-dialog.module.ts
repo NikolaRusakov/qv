@@ -7,6 +7,7 @@ import {
   MatFormFieldModule,
   MatIconModule,
   MatInputModule,
+  MatStepperModule,
 } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -21,6 +22,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MatButtonModule,
     MatIconModule,
     MatInputModule,
+    MatStepperModule,
   ],
   exports: [LoginDialogComponent],
 })

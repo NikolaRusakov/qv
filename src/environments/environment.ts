@@ -20,6 +20,9 @@ export const environment = {
     storageBucket: '',
     messagingSenderId: '',
   },
+  mattermost: {
+    url: 'http://localhost',
+  },
   functions: {
     auth: 'http://localhost:3000',
   },

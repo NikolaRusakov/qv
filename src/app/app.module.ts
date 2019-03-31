@@ -37,7 +37,9 @@ import { AuthEffects } from '@app/features/auth/auth.effects';
 import { VoteEffects } from '@app/features/vote/vote.effects';
 import { LoginDialogModule } from '@app/components/login-dialog/login-dialog.module';
 import { LoginDialogComponent } from '@app/components/login-dialog/login-dialog.component';
-
+import { DialogsEffects } from '@app/features/dialogs/dialogs.effects';
+import { InfoSnackbarComponent } from '@app/components/info-snackbar/info-snackbar.component';
+import { InfoSnackbarModule } from '@app/components/info-snackbar/info-snackbar.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -49,7 +51,7 @@ import { LoginDialogComponent } from '@app/components/login-dialog/login-dialog.
     }),
     AngularFireAuthModule,
     AngularFireStorageModule,
-    StoreModule.forRoot(reducers, {metaReducers}),
+    StoreModule.forRoot(reducers, { metaReducers }),
     StoreRouterConnectingModule.forRoot(),
     !environment.production && StoreDevtoolsModule.instrument(),
     AppRoutingModule,
@@ -65,7 +67,13 @@ import { LoginDialogComponent } from '@app/components/login-dialog/login-dialog.
     MatMenuModule,
     MatBottomSheetModule,
     LoginDialogModule,
-    EffectsModule.forRoot([AppEffects, VoteEffects, AuthEffects]),
+    InfoSnackbarModule,
+    EffectsModule.forRoot([
+      AppEffects,
+      VoteEffects,
+      AuthEffects,
+      DialogsEffects,
+    ]),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: environment.production,
@@ -79,15 +87,14 @@ import { LoginDialogComponent } from '@app/components/login-dialog/login-dialog.
     }),*/
   ],
   providers: [
-    {provide: FirestoreSettingsToken, useValue: {}},
+    { provide: FirestoreSettingsToken, useValue: {} },
     InitService,
     {
       provide: MAT_BOTTOM_SHEET_DEFAULT_OPTIONS,
-      useValue: {hasBackdrop: false},
+      useValue: { hasBackdrop: false },
     },
   ],
-  entryComponents:[LoginDialogComponent],
+  entryComponents: [LoginDialogComponent, InfoSnackbarComponent],
   bootstrap: [AppComponent],
 })
-export class AppModule {
-}
+export class AppModule {}
