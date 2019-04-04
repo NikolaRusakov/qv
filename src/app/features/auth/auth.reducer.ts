@@ -7,12 +7,12 @@ interface QvoteUserInfo {
   photoURL: string | null;
   providerId: string;
   uid?: string;
-  login: boolean;
 }
 
 export interface State {
   auth: string;
   credentials: QvoteUserInfo;
+  login: boolean;
 }
 
 export const initialState: State = {
@@ -23,8 +23,8 @@ export const initialState: State = {
     photoURL: null,
     email: null,
     displayName: null,
-    login: false,
   },
+  login: false,
 };
 
 export function reducer(state = initialState, action: AuthActions): State {
@@ -58,8 +58,8 @@ export function reducer(state = initialState, action: AuthActions): State {
           phoneNumber,
           photoURL,
           providerId,
-          login: true,
         },
+        login: true,
       };
     }
     case AuthActionTypes.LogoutFromAppSuccess: {
@@ -71,8 +71,8 @@ export function reducer(state = initialState, action: AuthActions): State {
           photoURL: null,
           email: null,
           displayName: null,
-          login: false,
         },
+        login: false,
       };
     }
 

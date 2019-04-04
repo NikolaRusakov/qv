@@ -10,7 +10,11 @@ import { State } from '@app/reducers';
 import { LoginDialogComponent } from '@app/components/login-dialog/login-dialog.component';
 import { UserLoginModel } from '@app/models/user-login.model';
 import { MatDialog, MatSnackBar } from '@angular/material';
-import { $selectUserInfo } from '@app/features/auth/auth.selectors';
+import {
+  $isLoggedIn,
+  $selectUserInfo,
+} from '@app/features/auth/auth.selectors';
+import { ShowDialog } from '@app/features/dialogs/dialogs.actions';
 
 @Component({
   selector: 'qv-main-nav',
@@ -24,6 +28,7 @@ export class MainNavComponent {
 
   userInfo$ = this.store.pipe(select($selectUserInfo));
 
+  isLoggedIn$ = this.store.pipe(select($isLoggedIn));
   constructor(
     private readonly breakpointObserver: BreakpointObserver,
     public readonly afAuth: AngularFireAuth,
@@ -70,7 +75,7 @@ export class MainNavComponent {
         }
       }
     };
-// TODO remove if it's useless for OAuth
+    // TODO remove if it's useless for OAuth
     oauthDialog.addEventListener('message', onMessage, false);
   }
 
@@ -81,31 +86,29 @@ export class MainNavComponent {
     });
 
     dialogRef.afterClosed().pipe(
-      map(({ username, password }: UserLoginModel) => {
+      map(({ login_id, password }: UserLoginModel) => {
         console.log('The dialog was closed');
         this.store.dispatch(
-          new actionAuth.LoginToMattermost({ username, password }),
+          new actionAuth.LoginToMattermost({ login_id: login_id, password }),
         );
       }),
     );
   }
 
-  logoutUser(username?: string) {
-    const snackBarRef = this.snackBar.open(
-      `${username ? username + ',' : ''} You're being logged out`,
-      'Login again',
-      {
-        duration: 2500,
-        verticalPosition: 'top',
-      },
-    );
-    snackBarRef
-      .onAction()
-      .pipe(take(1))
-      .subscribe(_ => {
-        this.openLoginDialog();
-      });
-
+  logoutUser() {
     this.store.dispatch(new actionAuth.LogoutFromApp());
+    this.store.dispatch(
+      new ShowDialog({
+        duration: 2000,
+        data: {
+          message: `countdown !`,
+          duration: 2000,
+          action: 'Login again',
+          caller: () => this.openLoginDialog(),
+        },
+        verticalPosition: 'top',
+        panelClass: '.disabled',
+      }),
+    );
   }
 }

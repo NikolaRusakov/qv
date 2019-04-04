@@ -1,4 +1,9 @@
-<p>
-  {{ message }}
-</p>
-<button mat-button (click)="caller()">{{ action }}</button>
+<div fxLayout>
+  <p>{{ message }}</p>
+  <button mat-button (click)="caller()">{{ action }}</button>
+</div>
+<mat-progress-bar
+  [value]="curCount | async"
+  mode="determinate"
+  *ngIf="duration > 0"
+></mat-progress-bar>

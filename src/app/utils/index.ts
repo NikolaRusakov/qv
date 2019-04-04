@@ -1,15 +1,16 @@
 import { Client4 } from 'mattermost-redux/client';
 import { environment } from '../../environments/environment';
 
-export const loginAndGetUser = (username, password): Promise<any> => {
+export const loginAndGetUser = async (username, password): Promise<any> => {
   console.log(username);
   Client4.setUrl(`${environment.mattermost.url}`);
-  try {
-    Client4.login(username, password);
-  } catch (error) {
-    console.error(error);
-    return error;
-  }
+  Client4.login(username, password);
+  // try {
+  //   Client4.login(login_id, password);
+  // } catch (error) {
+  //   console.error(error);
+  //   return error;
+  // }
 
   // let user;
   try {
@@ -20,3 +21,5 @@ export const loginAndGetUser = (username, password): Promise<any> => {
   }
   // return user;
 };
+
+export const displayErrorMsg = statusCode => ({});

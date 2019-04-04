@@ -12,3 +12,8 @@ export const $selectUserInfo = createSelector(
   $selectAuth,
   ({ credentials }) => credentials,
 );
+
+export const $isLoggedIn = createSelector(
+  $selectAuth,
+  ({ login }) => login,
+);

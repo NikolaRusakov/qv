@@ -29,7 +29,7 @@
       <h1 fxFlexOffset.gt-sm="50">qvote</h1>
 
       <ng-container
-        *ngIf="(userInfo$ | async).login; then actionMenu; else loginMenu"
+        *ngIf="(isLoggedIn$ | async); then actionMenu; else loginMenu"
       ></ng-container>
       <ng-template #loginMenu>
         <button mat-flat-button (click)="openLoginDialog()">Login</button>
